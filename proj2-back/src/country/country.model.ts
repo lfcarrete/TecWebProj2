@@ -3,6 +3,6 @@ export interface Country {
     alpha2code: String,
     alpha3code: 'String',
     latitude: number,
-    longitude: number,
+    longitude: number
 
 }
