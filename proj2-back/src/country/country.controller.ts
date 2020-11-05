@@ -22,7 +22,7 @@ export class CountryController {
     @Get("/searchCountry/:country")
     searchCountry(@Param('country') country: String): Promise<CountrySearch> {
         var d = new Date();
-        var date = d.getFullYear() + '-6-01';
+        var date = '2020-6-01';
         
         return this.countryService.searchCountry(country, date);
     }
