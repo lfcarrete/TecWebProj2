@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Link, Redirect } from 'react-router-dom'
+import './AllCountries.css'
 
-export default class Country extends Component {
+export default class AllCountries extends Component {
 
     constructor(props) {
         super(props)
@@ -18,9 +20,8 @@ export default class Country extends Component {
     }
 
     componentDidMount() {
-        const { name } = this.props.location.state
         const fetchData = async () => {
-            const response = await axios.get('http://localhost:3003/country/searchCountry/' + name)
+            const response = await axios.get('http://localhost:3003/country/fetchData')
             .catch(erro => console.log(erro))
             
             if (!response.data) {
@@ -33,7 +34,7 @@ export default class Country extends Component {
                 return prevState;
             }
             
-            this.setState(handleChange(this.state, response.data.provinces), () => console.log(this.state))
+            this.setState(handleChange(this.state, response.data), () => console.log(this.state))
 
             
         }
@@ -49,20 +50,8 @@ export default class Country extends Component {
             return (
                 <dl>
                     <dt>
-                        Country: {pais.province}
+                        <Link className = "paises" to= {{pathname: "/country", state: { name: pais.name }  }}>{pais.name}</Link>
                     </dt>
-                    <dd>
-                        Confirmed: {pais.confirmed}
-                    </dd>
-                    <dd>
-                        Recovered: {pais.recovered}
-                    </dd>
-                    <dd>
-                        Deaths: {pais.deaths}
-                    </dd>
-                    <dd>
-                        Active: {pais.active}
-                    </dd>
                 </dl>
                 
 
@@ -70,10 +59,12 @@ export default class Country extends Component {
         })
         return (
             <div>
+                <h1>Selecione um país</h1>
                 <dl>
                     {liCountries}
                 </dl>
             </div>
         )
     }
+
 }
