@@ -6,8 +6,8 @@ export class UserConsultDto {
 
     userId: Long
 
-    username: String
+    username: string
 
-    password: String
+    password: string
 
 }

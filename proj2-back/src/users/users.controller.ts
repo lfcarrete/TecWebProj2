@@ -11,7 +11,12 @@ import { UsersService } from './users.service';
 export class UsersController {
     constructor(private usersService: UsersService, private httpService: HttpService) {}
 
-    
+    @Post("/login")
+    auth(@Body() userConsultDto: UserConsultDto){
+        return this.usersService.auth(userConsultDto);
+    }
+
+
     @Post("/signup")
     @Redirect("localhost:3003/favorite/create", 201)
     userCreate(@Body() userCreateDto: UserCreateDto) {

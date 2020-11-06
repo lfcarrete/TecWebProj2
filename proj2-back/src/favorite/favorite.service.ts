@@ -21,7 +21,7 @@ export class FavoriteService {
     }
 
     async update(user: string, country: string): Promise<Favorite> {
-        const favorite = await this.favoriteModel.findOne();
+        const favorite = await this.favoriteModel.findOne({});
         
         
         return favorite;

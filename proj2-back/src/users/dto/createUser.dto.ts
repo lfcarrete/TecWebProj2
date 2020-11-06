@@ -3,8 +3,8 @@ import { Long } from "mongodb";
 
 export class UserCreateDto {
 
-    username: String
+    username: string
 
-    password: String
+    password: string
 
 }
