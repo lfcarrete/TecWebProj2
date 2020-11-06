@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Redirect, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Redirect, Res } from '@nestjs/common';
 import { UserConsultDto } from './dto/consultUser.dto';
 import { UserCreateDto } from './dto/createUser.dto';
 import { HttpService } from '@nestjs/common';
@@ -24,6 +24,11 @@ export class UsersController {
         console.log(userCreateDto);
         this.usersService.create(userCreateDto);
         return {url: "localhost:3003/favorite/create/"+ userCreateDto.username}
+    }
+
+    @Delete("/delete/:user")
+    userDelete(@Param("user") user: string) {
+        return this.usersService.delete(user);
     }
    
    

@@ -21,10 +21,29 @@ export class FavoriteService {
     }
 
     async update(user: string, country: string): Promise<Favorite> {
-        const favorite = await this.favoriteModel.findOne({});
+        const favorite = await this.favoriteModel.findOne({user: user});
         
+        favorite.favorites.push(country);
+        favorite.save();
         
         return favorite;
+    }
+
+    async delete(user: string, country: string): Promise<Favorite> {
+        const favorite = await this.favoriteModel.findOne({user: user});
+        var newFavorites = []
+
+        await favorite.favorites.forEach((pais) => {
+            if (pais != country) {
+                newFavorites.push(pais)
+            }
+        })
+        favorite.favorites = newFavorites;
+        favorite.save();
+
+        return favorite
+        
+
     }
 
     

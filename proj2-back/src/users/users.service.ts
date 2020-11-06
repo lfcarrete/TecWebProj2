@@ -30,5 +30,9 @@ export class UsersService {
         }
     }
 
+    async delete(user: string) {
+        return await this.userModel.deleteOne({username:user})
+    }
+
 
 }
