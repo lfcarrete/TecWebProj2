@@ -1,50 +1,63 @@
 import React, { Component, useImperativeHandle } from 'react'
 import axios from 'axios'
+import {Redirect} from 'react-router-dom'
 
 export default class Login extends Component {
 
     constructor(props) {
         super(props)
-        this.onSubmit = this.onSubmit.bind(this)
-        this.state = { listaUsuarios : [
-            {country: "England"},
-            {country: "Brazil"}
-        ] };
-        
-        console.log("Teste")
+        this.handleChange = this.handleChange.bind(this)
+        this.cadastro = this.cadastro.bind(this)
 
-        axios.get('http://localhost:3003/users/')
-            .then(resp => {
-                this.setState({listaUsuarios: resp.data})
-                return;
-            })
-            .catch(erro => console.log(erro))
+        this.state = {lista: [
+            {username: "Manu"},
+            {username: "Lu"}
+        ], usuario: {username: '', password: ''}}
+
     }
 
-    onSubmit(e) {
-        e.preventDefault();
-        var user = this.user;
-        var password = this.password;
-        console.log(user)
+    cadastro() {
+        axios.post('http://localhost:3003/users/login', this.state.usuario)
+            .then(resp => {
+                if(resp.data == true ){
+                    this.setState((state) => {
+                    return {
+                        redirectToReferrer: true
+                    }
+                    })
+                    return;
+                }
+                console.log(resp)
+            })
+            .catch(erro => console.log(erro))
+
+    }
+
+    handleChange(event) {
+        var handleState = (state, event) => {
+            state.usuario[event.target.name] = event.target.value
+            return state
+        }
+        this.setState(handleState(this.state, event))
     }
 
     render() {
-        var usuarios = this.state.listaUsuarios
-        console.log(usuarios)
-        
-
+        if (this.state.redirectToReferrer === true) {
+            return (
+                <Redirect to="/AllCountries" />
+            )
+        }
 
         return (
-            <div>  
+            <div>
                 <h1>Login</h1>
-                <form>
-                    <label for="user">Username:</label><br />
-                    <input type="text" id="user" ref={(c) => this.user = c} name="user"></input><br />
-                    <label for="password">Password:</label><br />
-                    <input type="password" id="password" ref={(c) => this.password = c}name="password"></input><br />
-                </form>
-                <button type="button" onClick={this.onSubmit}>Login</button>
+                <label>Username:</label><br />
+                <input name="username" value={this.state.usuario.username} onChange={this.handleChange} /><br />
+                <label>Password:</label><br />
+                <input type="password" name="password" value={this.state.usuario.password} onChange={this.handleChange} /><br />
+                <button onClick={this.cadastro}>Registrar</button>
             </div>
-        );
+        )
+
     }
 }
