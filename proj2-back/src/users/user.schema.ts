@@ -5,10 +5,10 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class User {
-  @Prop()
+  @Prop( { required: true } )
   username: String;
 
-  @Prop()
+  @Prop( { required: true } )
   password: String;
 }
 

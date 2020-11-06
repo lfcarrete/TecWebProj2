@@ -1,22 +1,27 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Redirect, Res } from '@nestjs/common';
 import { UserConsultDto } from './dto/consultUser.dto';
 import { UserCreateDto } from './dto/createUser.dto';
+import { HttpService } from '@nestjs/common';
+
 
 
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-    constructor(private usersService: UsersService) {}
+    constructor(private usersService: UsersService, private httpService: HttpService) {}
 
     
     @Post("/signup")
-    roundCreate(@Body() userCreateDto: UserCreateDto) {
-        console.log(userCreateDto);
-        return this.usersService.create(userCreateDto);
+    @Redirect("localhost:3003/favorite/create", 201)
+    userCreate(@Body() userCreateDto: UserCreateDto) {
         
+        console.log(userCreateDto);
+        this.usersService.create(userCreateDto);
+        return {url: "localhost:3003/favorite/create/"+ userCreateDto.username}
     }
-
+   
+   
 
     @Get()
     getUsers() {
