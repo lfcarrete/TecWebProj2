@@ -16,8 +16,8 @@ export class FavoriteService {
         return await createdFavorite.save();
       }
 
-    async findAll(): Promise<Favorite[]> {
-        return await this.favoriteModel.find().exec();
+    async findOne(user: string): Promise<Favorite> {
+        return await this.favoriteModel.findOne({user: user});
     }
 
     async update(user: string, country: string): Promise<Favorite> {

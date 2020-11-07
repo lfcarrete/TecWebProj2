@@ -18,9 +18,9 @@ export class FavoriteController {
         return this.favoriteService.update(user, country);
     }
     
-    @Get()
-    getFavorites() {
-        return this.favoriteService.findAll();
+    @Get("/:user")
+    getFavorites(@Param('user') user:string) {
+        return this.favoriteService.findOne(user);
     }
 
     @Delete("/delete/:user/:country")
