@@ -12,7 +12,7 @@ export default class Login extends Component {
         this.state = {lista: [
             {username: "Manu"},
             {username: "Lu"}
-        ], usuario: {username: '', password: ''}}
+        ], usuario: {username: '', password: ''}, strLog: {estado: ''}}
 
     }
 
@@ -23,6 +23,15 @@ export default class Login extends Component {
                     this.setState((state) => {
                     return {
                         redirectToReferrer: true
+                    }
+                    })
+                    return;
+                }
+                else{
+                    this.setState((state) => {
+                    return {
+                        usuario: {username: '', password: ''},
+                        strLog: {estado: "Usuario não existe, ou senha errada. Tente de novo."}
                     }
                     })
                     return;
@@ -55,8 +64,10 @@ export default class Login extends Component {
                 <input name="username" value={this.state.usuario.username} onChange={this.handleChange} /><br />
                 <label>Password:</label><br />
                 <input type="password" name="password" value={this.state.usuario.password} onChange={this.handleChange} /><br />
-                <button onClick={this.cadastro}>Registrar</button>
+                <button onClick={this.cadastro}>Registrar</button><br />
+                <h5>{this.state.strLog.estado}</h5>
             </div>
+
         )
 
     }
