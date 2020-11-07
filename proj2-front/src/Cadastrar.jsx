@@ -43,8 +43,9 @@ export default class Cadastrar extends Component {
 
     render() {
         if (this.state.redirectToReferrer === true) {
+            var usuario = this.state.usuario.username
             return (
-                <Redirect to="/AllCountries" />
+                <Redirect to={{pathname: "/AllCountries", state: {us: usuario}}} />
             )
         }
 

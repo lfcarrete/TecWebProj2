@@ -1,6 +1,7 @@
 import React, { Component, useImperativeHandle } from 'react'
 import axios from 'axios'
 import {Redirect} from 'react-router-dom'
+import AllCountries from './AllCountries'
 
 export default class Login extends Component {
 
@@ -51,9 +52,12 @@ export default class Login extends Component {
     }
 
     render() {
+
         if (this.state.redirectToReferrer === true) {
+            var usuario = this.state.usuario.username
+            console.log(usuario)
             return (
-                <Redirect to="/AllCountries" />
+                <Redirect to={{pathname: "/AllCountries", state: {us: usuario}}}/>
             )
         }
 
@@ -64,7 +68,7 @@ export default class Login extends Component {
                 <input name="username" value={this.state.usuario.username} onChange={this.handleChange} /><br />
                 <label>Password:</label><br />
                 <input type="password" name="password" value={this.state.usuario.password} onChange={this.handleChange} /><br />
-                <button onClick={this.cadastro}>Registrar</button><br />
+                <button onClick={this.cadastro}>login</button><br />
                 <h5>{this.state.strLog.estado}</h5>
             </div>
 

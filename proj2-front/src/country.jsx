@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Link, Redirect } from 'react-router-dom'
 
 export default class Country extends Component {
 
@@ -9,7 +10,7 @@ export default class Country extends Component {
         this.state = { listaCountries : [
             {country: "England"},
             {country: "Brazil"}
-        ] };
+        ], usuario: {username: ''} };
         
         console.log("Teste")
 
@@ -40,8 +41,8 @@ export default class Country extends Component {
         fetchData() 
     }
 
-    render() {
 
+    render() {
         var countries = this.state.listaCountries;
         console.log(this.state)
 
@@ -70,6 +71,7 @@ export default class Country extends Component {
         })
         return (
             <div>
+                <h1>Dados sobre o país</h1>
                 <dl>
                     {liCountries}
                 </dl>

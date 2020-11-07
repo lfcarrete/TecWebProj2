@@ -3,17 +3,15 @@ import axios from 'axios'
 import { Link, Redirect } from 'react-router-dom'
 import './AllCountries.css'
 
-export default class AllCountries extends Component {
+export default class favorite extends Component {
 
     constructor(props) {
         super(props)
-        this.favorite = this.favorite.bind(this)
-        this.favoritelist = this.favoritelist.bind(this)
-
+        this.Back = this.Back.bind(this)
         this.state = { listaCountries : [
             {country: "England"},
             {country: "Brazil"}
-        ], usuario: {username: ''}, w: {es: 0} };
+        ], usuario: {username: ''} };
         
 
         console.log("Teste")
@@ -48,27 +46,10 @@ export default class AllCountries extends Component {
         fetchData() 
     }
 
-    favorite() {
-        axios.post('http://localhost:3003/favorite/create/' + this.state.usuario.username, this.state.usuario.username)
-            .then(resp => {
-                if(Math.floor(resp.status/100) == 2){
-                    this.setState((state) => {
-                    return {
-                        redirectToReferrer: true
-                    }
-                    })
-                    return;
-                }
-                console.log(resp)
-            })
-            .catch(erro => console.log(erro))
-    }
-
-    favoritelist() {
+    Back() {
         this.setState((state) => {
         return {
             redirectToReferrer: true,
-            w: {es: 1}
         }
         })
         return;  
@@ -77,27 +58,19 @@ export default class AllCountries extends Component {
     render() {
         if (this.state.redirectToReferrer === true) {
             var usuario = this.state.usuario.username
-            var estado = this.state.w.es
-            if (estado == 1){
-                return (
-                    <Redirect to={{pathname: "/favoritesPag", state: {us: usuario} }}/>
-                )
-            } else {
-                return (
-                
-                    <Redirect to={{pathname: "/favorites", state: {us: usuario} }}/>
-                )
-            }
-            
+            return (
+                <Redirect to={{pathname: "/AllCountries", state: {us: usuario}}} />
+            )
         }
         var countries = this.state.listaCountries;
         console.log(this.state)
-
+        var usuario = this.state.usuario.username
+        
         var liCountries = countries.map(function(pais) {
             return (
                 <dl>
                     <dt>
-                        <Link className = "paises" to= {{pathname: "/country", state: { name: pais.name }  }}>{pais.name}</Link>
+                        <Link className = "paises" to= {{pathname: "/favoriteList", state: { name: pais.name, us: usuario }  }}>{pais.name}</Link>
                     </dt>
                 </dl>
                 
@@ -106,12 +79,12 @@ export default class AllCountries extends Component {
         })
         return (
             <div>
-                <h1>Selecione um país</h1>
-                <button onClick={this.favorite}>Criar pagina de favoritos</button><br />
-                <button onClick={this.favoritelist}>Ver paises favoritos</button>
+                <h1>Selecione um país e ele entrara na lista de favoritos</h1>
+                <button onClick={this.Back}>voltar</button>
                 <dl>
                     {liCountries}
                 </dl>
+            
             </div>
         )
     }
