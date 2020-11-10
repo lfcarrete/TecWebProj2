@@ -8,7 +8,7 @@ import { FavoriteModule } from './favorite/favorite.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest'),
+    MongooseModule.forRoot(process.env.MONGO_CONNECTION),
     CountryModule, UsersModule, FavoriteModule],
 
 })
